@@ -4,6 +4,7 @@ const ChatForm = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     webSocket.sendMessage(e.target.message.value);
+    e.target.reset();
   };
   return (
     <form className={s.chatForm} onSubmit={submitHandler}>

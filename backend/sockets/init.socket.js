@@ -12,7 +12,7 @@ const initWebSockets = (io) => {
       socket.join('global');
       RoomsObj['global'].connect(user);
       io.emit('global:getUsers', usersArr);
-      socket.emit('global:chatHistory', RoomsObj['global'].chatHistory);
+      socket.emit('global:chatData', RoomsObj['global'].chatData);
     });
     socket.on('global:message', (message) => {
       const user = usersArr.find((roomer) => roomer.id === socket.id);

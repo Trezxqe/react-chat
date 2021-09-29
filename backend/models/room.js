@@ -19,8 +19,8 @@ class Room {
     this._chatHistory.push({ messageId, username, message, socketId });
     return messageId;
   }
-  get chatHistory() {
-    return this._chatHistory;
+  get chatData() {
+    return { history: this._chatHistory, name: this.name };
   }
 }
 

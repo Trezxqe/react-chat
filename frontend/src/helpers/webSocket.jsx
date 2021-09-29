@@ -16,10 +16,13 @@ class WebSocket {
         chatStore.dispatch({ type: 'chat/getUsers', payload: { usersList } });
       });
       this.socket.on('global:message', (message) => {
-        chatStore.dispatch({ type: 'chat/getMessage', payload: { message } });
+        chatStore.dispatch({ type: 'chat/setMessage', payload: { message } });
       });
-      this.socket.once('global:chatHistory', (chatHistory) => {
-        chatStore.dispatch({ type: 'chat/getHistory', payload: { chatHistory } });
+      this.socket.once('global:chatData', (chatData) => {
+        chatStore.dispatch({
+          type: 'chat/setData',
+          payload: { chatHistory: chatData.history, chatName: chatData.name },
+        });
       });
       this.socket.emit('global:newUser', username);
       chatStore.dispatch({ type: 'user/login', payload: { username, id } });

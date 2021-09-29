@@ -20,12 +20,13 @@ const chatReducer = (state = initState, action) => {
         ...state,
         usersList: action.payload.usersList,
       };
-    case 'chat/getHistory':
+    case 'chat/setData':
       return {
         ...state,
+        currentRoomName: action.payload.chatName,
         currentRoomChatHistory: action.payload.chatHistory,
       };
-    case 'chat/getMessage':
+    case 'chat/setMessage':
       return {
         ...state,
         currentRoomChatHistory: [
