@@ -4,4 +4,5 @@
   margin: 5px auto;
   border-radius: 5px;
   max-width: 500px;
+  min-height: 500px;
 }

@@ -1,0 +1,12 @@
+.message {
+  padding: 5px;
+  margin: 3px 0;
+  border-radius: 5px;
+  font-size: 14px;
+}
+.messageClient {
+  background-color: aqua;
+}
+.messageOther {
+  background-color: burlywood;
+}
