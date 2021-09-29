@@ -1,25 +1,21 @@
-import { useState } from 'react';
 import { Redirect } from 'react-router';
+import chatStore from '../../helpers/chatStore.jsx';
 
 const LoginForm = () => {
-  const [redirect, setRedirect] = useState(false);
   const submitHandler = (e) => {
+    const username = e.target.username.value;
+    const id = 'u3';
     e.preventDefault();
     console.log('submit');
-    setRedirect(true);
+    chatStore.dispatch({ type: 'user/login', payload: { username, id } });
+    console.log(chatStore.getState());
   };
   return (
-    <>
-      {!redirect ? (
-        <form onSubmit={submitHandler}>
-          <input type='text' name='username' />
-          <br />
-          <button type='submit'>Join</button>
-        </form>
-      ) : (
-        <Redirect to='/chat' />
-      )}
-    </>
+    <form onSubmit={submitHandler}>
+      <input type='text' name='username' />
+      <br />
+      <button type='submit'>Join</button>
+    </form>
   );
 };
 
