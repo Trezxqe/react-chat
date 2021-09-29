@@ -4,7 +4,6 @@ const initState = {
 };
 
 const chatReducer = (state = initState, action) => {
-  console.log(state, action);
   switch (action.type) {
     case 'user/login':
       return {

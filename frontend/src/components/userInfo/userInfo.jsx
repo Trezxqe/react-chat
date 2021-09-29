@@ -1,9 +1,10 @@
+import { useSelector } from 'react-redux';
 import s from './userInfo.module.css';
 const UserInfo = () => {
-  const db = { username: 'wake', id: 'u3' };
+  const { username, id } = useSelector((state) => state);
   return (
     <div className={s.userInfo}>
-      Username: {db.username}, id: {db.id}
+      Username: {username}, id: {id}
     </div>
   );
 };

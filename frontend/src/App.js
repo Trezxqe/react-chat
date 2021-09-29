@@ -1,17 +1,19 @@
 import MainLayout from './components/mainLayout/mainLayout.jsx';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import LoginForm from './components/loginForm/loginForm.jsx';
 import ChatLayout from './components/chatLayout/chatLayout.jsx';
+import { useSelector } from 'react-redux';
 const App = () => {
+  const { id } = useSelector((state) => state);
   return (
     <MainLayout>
       <BrowserRouter>
         <Switch>
           <Route path='/' exact>
-            <LoginForm />
+            {id ? <Redirect to='/chat' /> : <LoginForm />}
           </Route>
           <Route path='/chat' exact>
-            <ChatLayout />
+            {id ? <ChatLayout /> : <Redirect to='/' />}
           </Route>
         </Switch>
       </BrowserRouter>
