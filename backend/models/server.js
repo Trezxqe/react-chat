@@ -1,6 +1,7 @@
 import express, { urlencoded, json } from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
+import cors from 'cors';
 import connectSocket from '../sockets/connect.socket.js';
 
 class ChatServer {
@@ -14,6 +15,7 @@ class ChatServer {
     this._sockets();
   }
   _middlewares() {
+    this.app.use(cors());
     this.app.use(urlencoded({ extended: true }));
     this.app.use(json());
   }
@@ -21,7 +23,7 @@ class ChatServer {
     connectSocket(this.io);
   }
   start() {
-    this.httpServer.listen(() => {
+    this.httpServer.listen(this.PORT, () => {
       console.log('Server started, port:', this.PORT);
     });
   }

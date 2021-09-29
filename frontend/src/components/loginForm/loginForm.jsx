@@ -1,12 +1,9 @@
-import chatStore from '../../helpers/chatStore.jsx';
+import webSocket from '../../helpers/webSocket.jsx';
 
 const LoginForm = () => {
   const submitHandler = (e) => {
-    const username = e.target.username.value;
-    const id = 'u3';
     e.preventDefault();
-    console.log('submit');
-    chatStore.dispatch({ type: 'user/login', payload: { username, id } });
+    webSocket.connect(e.target.username.value);
   };
   return (
     <form onSubmit={submitHandler}>
