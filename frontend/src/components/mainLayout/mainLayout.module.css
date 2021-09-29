@@ -1,0 +1,7 @@
+.mainLayout {
+  padding: 15px;
+  box-shadow: 0px 0px 5px #dadada;
+  margin: 5px auto;
+  border-radius: 5px;
+  max-width: 500px;
+}

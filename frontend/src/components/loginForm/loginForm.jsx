@@ -1,14 +1,25 @@
+import { useState } from 'react';
+import { Redirect } from 'react-router';
+
 const LoginForm = () => {
+  const [redirect, setRedirect] = useState(false);
   const submitHandler = (e) => {
-    e.preventDefaul();
+    e.preventDefault();
     console.log('submit');
+    setRedirect(true);
   };
   return (
-    <form onSubmit={submitHandler}>
-      <input type='text' name='username' />
-      <br />
-      <button type='submit'>Join</button>
-    </form>
+    <>
+      {!redirect ? (
+        <form onSubmit={submitHandler}>
+          <input type='text' name='username' />
+          <br />
+          <button type='submit'>Join</button>
+        </form>
+      ) : (
+        <Redirect to='/chat' />
+      )}
+    </>
   );
 };
 
