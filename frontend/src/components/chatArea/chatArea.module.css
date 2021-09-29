@@ -1,3 +1,12 @@
 .chatArea {
   width: 65%;
 }
+.messageArea {
+  height: 450px;
+  overflow-y: scroll;
+}
+.channelName {
+  font-size: 22px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}

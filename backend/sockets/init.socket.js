@@ -16,16 +16,19 @@ const initWebSockets = (io) => {
     });
     socket.on('global:message', (message) => {
       const user = usersArr.find((roomer) => roomer.id === socket.id);
+      const date = new Date();
       const messageId = RoomsObj['global'].addMessage(
         user.username,
         message,
         socket.id,
+        date,
       );
       io.to('global').emit('global:message', {
         username: user.username,
         message,
         socketId: socket.id,
         messageId,
+        date,
       });
     });
     socket.on('disconnect', () => {
