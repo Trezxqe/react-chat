@@ -2,7 +2,7 @@ import express, { urlencoded, json } from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
-import connectSocket from '../sockets/connect.socket.js';
+import initWebSockets from '../sockets/init.socket.js';
 
 class ChatServer {
   constructor() {
@@ -20,7 +20,7 @@ class ChatServer {
     this.app.use(json());
   }
   _sockets() {
-    connectSocket(this.io);
+    initWebSockets(this.io);
   }
   start() {
     this.httpServer.listen(this.PORT, () => {

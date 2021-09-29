@@ -1,8 +1,9 @@
 import s from './chatMessage.module.css';
-const ChatMessage = ({ author, message, client }) => {
+const ChatMessage = ({ data }) => {
+  const { username, message } = data;
   return (
-    <div className={`${s.message} ${client ? s.messageClient : s.messageOther}`}>
-      <span>{author}:</span> <span>{message}</span>
+    <div className={`${s.message}`}>
+      <span>{username}:</span> <span>{message}</span>
     </div>
   );
 };

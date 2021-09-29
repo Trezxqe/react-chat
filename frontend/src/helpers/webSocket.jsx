@@ -15,6 +15,12 @@ class WebSocket {
       this.socket.on('global:getUsers', (usersList) => {
         chatStore.dispatch({ type: 'chat/getUsers', payload: { usersList } });
       });
+      this.socket.on('global:message', (message) => {
+        chatStore.dispatch({ type: 'chat/getMessage', payload: { message } });
+      });
+      this.socket.once('global:chatHistory', (chatHistory) => {
+        chatStore.dispatch({ type: 'chat/getHistory', payload: { chatHistory } });
+      });
       this.socket.emit('global:newUser', username);
       chatStore.dispatch({ type: 'user/login', payload: { username, id } });
     });
@@ -22,7 +28,9 @@ class WebSocket {
   disconnect() {}
   createRoom() {}
   leaveRoom() {}
-  sendMessage() {}
+  sendMessage(message) {
+    this.socket.emit('global:message', message);
+  }
 }
 
 export default new WebSocket();

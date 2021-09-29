@@ -1,0 +1,27 @@
+class Room {
+  constructor(name, isPrivate) {
+    this.name = name;
+    this.isPrivate = isPrivate;
+    this._chatHistory = [];
+    this._usersList = [];
+  }
+  connect(user) {
+    this._usersList.push(user);
+  }
+  disconnect(user) {
+    this._usersList = this._usersList.filter((roomer) => roomer.id !== user.id);
+  }
+  get usersList() {
+    return this._usersList;
+  }
+  addMessage(username, message, socketId) {
+    const messageId = this._chatHistory.length;
+    this._chatHistory.push({ messageId, username, message, socketId });
+    return messageId;
+  }
+  get chatHistory() {
+    return this._chatHistory;
+  }
+}
+
+export default Room;

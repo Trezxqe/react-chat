@@ -1,8 +1,9 @@
+import webSocket from '../../helpers/webSocket.jsx';
 import s from './chatForm.module.css';
 const ChatForm = () => {
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log('submit');
+    webSocket.sendMessage(e.target.message.value);
   };
   return (
     <form className={s.chatForm} onSubmit={submitHandler}>
