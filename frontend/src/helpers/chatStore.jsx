@@ -1,6 +1,6 @@
-import { createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
 import chatReducer from './chatReducer.jsx';
 
-const chatStore = createStore(chatReducer);
+const chatStore = configureStore({ reducer: chatReducer });
 
 export default chatStore;
