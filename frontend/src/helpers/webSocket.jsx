@@ -12,6 +12,10 @@ class WebSocket {
     this.socket = io(this.host, { path: this.path });
     this.socket.on('connect', () => {
       const { id } = this.socket;
+      this.socket.on('global:getUsers', (usersList) => {
+        chatStore.dispatch({ type: 'chat/getUsers', payload: { usersList } });
+      });
+      this.socket.emit('global:newUser', username);
       chatStore.dispatch({ type: 'user/login', payload: { username, id } });
     });
   }
