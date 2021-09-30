@@ -4,6 +4,7 @@ const db = {
   rooms: {},
   createRoom(roomProfile) {
     this.rooms[roomProfile.roomName] = new Room(roomProfile);
+    return roomProfile.roomName;
   },
 };
 

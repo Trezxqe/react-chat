@@ -1,15 +1,17 @@
-import { useSelector } from 'react-redux';
 import webSocket from '../../helpers/webSocket.jsx';
 import s from './createRoomForm.module.css';
+import { useSelector } from 'react-redux';
 
 const CreateRoomForm = () => {
-  const { username } = useSelector((state) => state);
+  const { currentRoomName } = useSelector((state) => state);
   const submitHandler = (e) => {
     e.preventDefault();
     const data = {
-      username,
-      roomName: e.target.roomName.value,
-      private: e.target.roomType.checked,
+      currentRoomName,
+      roomProfile: {
+        roomName: e.target.roomName.value,
+        private: e.target.roomType.checked,
+      },
     };
     webSocket.createRoom(data);
     e.target.reset();

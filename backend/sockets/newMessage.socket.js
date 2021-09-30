@@ -1,7 +1,7 @@
 import db from './db.socket.js';
 
 const newMessage = (socket, username, room, message) => {
-  console.log('new message');
+  console.log('new message:', message, '.room:', room);
   const messageData = {
     username,
     message,

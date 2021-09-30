@@ -13,6 +13,9 @@ class Room {
       (roomer) => roomer.socketId !== socketId,
     );
   }
+  leave(socketId) {
+    return this._usersList.find((roomer) => roomer.socketId === socketId);
+  }
   getUsersList() {
     return this._usersList;
   }

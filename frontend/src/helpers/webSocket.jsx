@@ -31,9 +31,10 @@ class WebSocket {
   }
   createRoom(data) {
     this.socket.emit('user:createRoom', data);
-    this.socket.once('user:createRoom', (res) => {
+    this.socket.once('user:joinRoom', (res) => {
+      const { roomData } = res;
       if (!res.error) {
-        this.joinRoom({ roomName: res.roomName });
+        chatStore.dispatch({ type: 'user/joinRoom', payload: roomData });
       }
     });
   }

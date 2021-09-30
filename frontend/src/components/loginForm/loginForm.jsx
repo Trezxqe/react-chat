@@ -7,7 +7,7 @@ const LoginForm = () => {
   };
   return (
     <form onSubmit={submitHandler}>
-      <input type='text' name='username' />
+      <input type='text' name='username' required />
       <br />
       <button type='submit'>Join</button>
     </form>
