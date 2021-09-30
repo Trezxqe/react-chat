@@ -14,17 +14,20 @@ const CreateRoomForm = () => {
     e.target.reset();
   };
   return (
-    <form onSubmit={submitHandler}>
-      <label>
-        <span>Room name:</span>
-        <input type='text' name='roomName' required />
-      </label>
-      <label>
-        <span>Private:</span>
-        <input type='checkbox' name='roomType' />
-      </label>
-      <button type='submit'>Create</button>
-    </form>
+    <div>
+      <h3>Create Room</h3>
+      <form onSubmit={submitHandler}>
+        <label>
+          <span>Room name:</span>
+          <input type='text' name='roomName' required />
+        </label>
+        <label>
+          <span>Private:</span>
+          <input type='checkbox' name='roomType' />
+        </label>
+        <button type='submit'>Create</button>
+      </form>
+    </div>
   );
 };
 

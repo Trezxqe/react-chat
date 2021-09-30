@@ -18,6 +18,7 @@ const chatReducer = (state = initState, action) => {
     case 'chat/getUsers':
       return {
         ...state,
+        currentRoomSize: action.payload.usersList.length,
         usersList: action.payload.usersList,
       };
     case 'chat/setData':
