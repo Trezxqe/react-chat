@@ -1,0 +1,12 @@
+.listing {
+  overflow: hidden;
+}
+.online {
+  border-bottom: 1px solid;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+  font-size: 14px;
+}
+.online span {
+  font-weight: 500;
+}

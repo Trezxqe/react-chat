@@ -1,3 +1,6 @@
-.chatSidebar {
+.wrapper {
   width: 35%;
+  border-right: 1px solid;
+  padding-right: 10px;
+  margin-right: 10px;
 }
