@@ -5,7 +5,6 @@ const db = {
   createRoom(roomProfile) {
     const dublCount = this._searchDublicates(roomProfile.roomName);
     if (dublCount) {
-      console.log('dublicate', dublCount);
       roomProfile.roomName = this._renameRoom(roomProfile.roomName, dublCount);
     }
     this.rooms[roomProfile.roomName] = new Room(roomProfile);

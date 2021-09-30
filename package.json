@@ -1,0 +1,27 @@
+{
+  "name": "r-chat",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "install-client": "cd ./frontend && npm install",
+    "start-client": "cd ./frontend && npm start",
+    "install-server": "cd ./backend && npm install",
+    "start-server": "cd ./backend && npm start",
+    "dev": "concurrently \"npm run start-server\" \"npm run start-client\"",
+    "install-dev": "concurrently \"npm run install-server\" \"npm run install-client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acopalypse/react-chat.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/acopalypse/react-chat/issues"
+  },
+  "homepage": "https://github.com/acopalypse/react-chat#readme",
+  "dependencies": {
+    "concurrently": "^6.2.2"
+  }
+}
