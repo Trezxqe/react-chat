@@ -1,4 +1,4 @@
-const checkUserType = (messageUsername, stateUsername) => {
-  return messageUsername === stateUsername;
+const checkUserType = (messageUsernameId, stateUsernameId) => {
+  return messageUsernameId === stateUsernameId;
 };
 export default checkUserType;
