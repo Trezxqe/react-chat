@@ -16,7 +16,8 @@ class Room {
   getUsersList() {
     return this._usersList;
   }
-  addMessage(username, message, socketId, date) {
+  addMessage(data) {
+    const { username, message, date, socketId } = data;
     const messageId = this._roomHistory.length;
     this._roomHistory.push({ messageId, username, message, date, socketId });
     return messageId;

@@ -53,7 +53,7 @@ class WebSocket {
   }
   _roomMessageListener() {
     this.socket.on('room:newMessage', (res) => {
-      console.log('new message:', res);
+      chatStore.dispatch({ type: 'room/newMessage', payload: res });
     });
   }
   _leaveCurrentRoom(data) {

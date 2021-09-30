@@ -29,32 +29,14 @@ const chatReducer = (state = initState, action) => {
         currentRoomSize: action.payload.usersList.length,
         usersList: action.payload.usersList,
       };
-    // case 'user/login':
-    //   return {
-    //     ...state,
-    //     username: action.payload.username,
-    //     userId: action.payload.userId,
-    //   };
-    // case 'chat/getUsers':
-    //   return {
-    //     ...state,
-    //     currentRoomSize: action.payload.usersList.length,
-    //     usersList: action.payload.usersList,
-    //   };
-    // case 'chat/setData':
-    //   return {
-    //     ...state,
-    //     currentRoomName: action.payload.roomName,
-    //     currentRoomChatHistory: action.payload.chatHistory,
-    //   };
-    // case 'chat/setMessage':
-    //   return {
-    //     ...state,
-    //     currentRoomChatHistory: [
-    //       ...state.currentRoomChatHistory,
-    //       action.payload.message,
-    //     ],
-    //   };
+    case 'room/newMessage':
+      return {
+        ...state,
+        currentRoomHistory: [
+          ...state.currentRoomHistory,
+          action.payload.messageData,
+        ],
+      };
     case 'chat/joinRoom':
       return {
         ...state,

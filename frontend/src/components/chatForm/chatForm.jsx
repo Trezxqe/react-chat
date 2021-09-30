@@ -1,10 +1,13 @@
+import { useSelector } from 'react-redux';
 import webSocket from '../../helpers/webSocket.jsx';
 import s from './chatForm.module.css';
 const ChatForm = () => {
+  const { currentRoomName, username } = useSelector((state) => state);
   const submitHandler = (e) => {
+    const message = e.target.message.value;
     e.preventDefault();
-    if (e.target.message.value) {
-      webSocket.sendMessage(e.target.message.value);
+    if (message) {
+      webSocket.sendMessage({ room: currentRoomName, message, username });
       e.target.reset();
     }
   };
