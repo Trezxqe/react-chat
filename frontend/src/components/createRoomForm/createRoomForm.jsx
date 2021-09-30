@@ -1,20 +1,29 @@
+import { useSelector } from 'react-redux';
+import webSocket from '../../helpers/webSocket.jsx';
+
 const CreateRoomForm = () => {
+  const { username } = useSelector((state) => state);
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log('creating room');
+    const data = {
+      username,
+      roomName: e.target.roomName.value,
+      private: e.target.roomType.checked,
+    };
+    webSocket.createRoom(data);
     e.target.reset();
   };
   return (
     <form onSubmit={submitHandler}>
       <label>
         <span>Room name:</span>
-        <input type='text' name='roomName' />
+        <input type='text' name='roomName' required />
       </label>
       <label>
         <span>Private:</span>
         <input type='checkbox' name='roomType' />
       </label>
-      <button>Create</button>
+      <button type='submit'>Create</button>
     </form>
   );
 };

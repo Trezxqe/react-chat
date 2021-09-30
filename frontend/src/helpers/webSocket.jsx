@@ -29,7 +29,9 @@ class WebSocket {
     });
   }
   disconnect() {}
-  createRoom() {}
+  createRoom(data) {
+    this.socket.emit(`${data.roomName}:createRoom`, data);
+  }
   leaveRoom() {}
   sendMessage(message) {
     this.socket.emit('global:message', message);
