@@ -1,7 +1,6 @@
 import User from '../models/user.js';
 
 const createProfile = (req, socket) => {
-  console.log('create user profile');
   const userProfile = {
     username: req.username,
     socketId: socket.id,
