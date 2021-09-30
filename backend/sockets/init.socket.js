@@ -35,6 +35,21 @@ const initWebSockets = (io) => {
       usersArr = usersArr.filter((el) => el.id !== socket.id);
       io.emit('global:getUsers', usersArr);
     });
+    socket.on('user:createRoom', (data) => {
+      console.log('creating new room,', data);
+      RoomsObj[data.roomName] = new Room(data.roomName, data.private);
+      socket.emit('user:createRoom', {
+        message: 'Room created successfully',
+        roomName: data.roomName,
+      });
+    });
+    socket.on('user:joinRoom', (data) => {
+      const user = usersArr.find((roomer) => roomer.id === socket.id);
+      RoomsObj[data.roomName].connect(user);
+      socket.emit('user:joinRoom', {
+        data: RoomsObj[data.roomName].chatData,
+      });
+    });
   });
 };
 

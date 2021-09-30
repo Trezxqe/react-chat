@@ -20,7 +20,11 @@ class Room {
     return messageId;
   }
   get chatData() {
-    return { history: this._chatHistory, name: this.name };
+    return {
+      history: this._chatHistory,
+      name: this.name,
+      usersList: this._usersList,
+    };
   }
 }
 

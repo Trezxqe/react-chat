@@ -21,7 +21,7 @@ class WebSocket {
       this.socket.once('global:chatData', (chatData) => {
         chatStore.dispatch({
           type: 'chat/setData',
-          payload: { chatHistory: chatData.history, chatName: chatData.name },
+          payload: { chatHistory: chatData.history, roomName: chatData.name },
         });
       });
       this.socket.emit('global:newUser', username);
@@ -30,7 +30,16 @@ class WebSocket {
   }
   disconnect() {}
   createRoom(data) {
-    this.socket.emit(`${data.roomName}:createRoom`, data);
+    this.socket.emit('user:createRoom', data);
+    this.socket.once('user:createRoom', (data) => {
+      this.joinRoom(data.roomName);
+    });
+  }
+  joinRoom(roomName) {
+    this.socket.emit('user:joinRoom', { roomName });
+    this.socket.once('user:joinRoom', (res) => {
+      chatStore.dispatch({ type: 'chat/joinRoom', payload: res.data });
+    });
   }
   leaveRoom() {}
   sendMessage(message) {
