@@ -31,14 +31,22 @@ class WebSocket {
   disconnect() {}
   createRoom(data) {
     this.socket.emit('user:createRoom', data);
-    this.socket.once('user:createRoom', (data) => {
-      this.joinRoom(data.roomName);
+    this.socket.once('user:createRoom', (res) => {
+      if (!res.error) {
+        this.joinRoom(res.roomName);
+      }
     });
   }
   joinRoom(roomName) {
     this.socket.emit('user:joinRoom', { roomName });
     this.socket.once('user:joinRoom', (res) => {
       chatStore.dispatch({ type: 'chat/joinRoom', payload: res.data });
+      this._roomUsersListener();
+    });
+  }
+  _roomUsersListener() {
+    this.socket.on('room:activeUsers', (res) => {
+      console.log('users list listener:', res);
     });
   }
   leaveRoom() {}

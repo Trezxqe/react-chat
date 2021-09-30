@@ -39,16 +39,20 @@ const initWebSockets = (io) => {
       console.log('creating new room,', data);
       RoomsObj[data.roomName] = new Room(data.roomName, data.private);
       socket.emit('user:createRoom', {
-        message: 'Room created successfully',
+        error: false,
         roomName: data.roomName,
       });
     });
-    socket.on('user:joinRoom', (data) => {
+    socket.on('user:joinRoom', (req) => {
       const user = usersArr.find((roomer) => roomer.id === socket.id);
-      RoomsObj[data.roomName].connect(user);
+      socket.join(req.roomName);
+      RoomsObj[req.roomName].connect(user);
       socket.emit('user:joinRoom', {
-        data: RoomsObj[data.roomName].chatData,
+        data: RoomsObj[req.roomName].chatData,
       });
+      socket
+        .to(req.roomName)
+        .emit('room:activeUsers', { usersList: RoomsObj[req.roomName].usersList });
     });
   });
 };
