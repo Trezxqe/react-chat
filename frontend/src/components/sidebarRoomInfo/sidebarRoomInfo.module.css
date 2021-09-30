@@ -1,5 +1,7 @@
 .listing {
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  max-height: 170px;
 }
 .online {
   border-bottom: 1px solid;
