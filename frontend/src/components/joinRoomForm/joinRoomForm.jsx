@@ -1,13 +1,15 @@
+import { useSelector } from 'react-redux';
 import webSocket from '../../helpers/webSocket.jsx';
 import s from './joinRoomForm.module.css';
 
 const JoinRoomForm = () => {
+  const { currentRoomName } = useSelector((state) => state);
   const submitHandler = (e) => {
     e.preventDefault();
     const data = {
+      currentRoomName,
       roomName: e.target.roomName.value,
     };
-    console.log(data);
     webSocket.joinRoom(data);
     e.target.reset();
   };

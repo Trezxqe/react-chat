@@ -34,6 +34,13 @@ const initWebSockets = (io) => {
       updateUsersList(socket);
       joinRoom(socket, user, roomName, currentRoomName);
     });
+    socket.on('user:joinRoom', (req) => {
+      const { currentRoomName, roomName } = req;
+      const user = leaveRoom(socket, currentRoomName);
+      userDisconnect(socket);
+      updateUsersList(socket);
+      joinRoom(socket, user, roomName, currentRoomName);
+    });
   });
 };
 

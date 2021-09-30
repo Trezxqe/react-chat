@@ -21,9 +21,9 @@ class WebSocket {
       this.socket.once('user:joinRoom', (res) => {
         const { roomData } = res;
         chatStore.dispatch({ type: 'user/joinRoom', payload: roomData });
-        this._roomUsersListener();
-        this._roomMessageListener();
       });
+      this._roomUsersListener();
+      this._roomMessageListener();
     });
   }
   sendMessage(data) {
@@ -39,13 +39,11 @@ class WebSocket {
     });
   }
   joinRoom(data) {
-    this.socket.emit('user:joinRoom', { roomName: data.roomName });
-    this._leaveCurrentRoom({ currentRoom: data.currentRoom });
+    this.socket.emit('user:joinRoom', data);
     this.socket.once('user:joinRoom', (res) => {
-      chatStore.dispatch({ type: 'chat/joinRoom', payload: res.data });
+      const { roomData } = res;
+      chatStore.dispatch({ type: 'user/joinRoom', payload: roomData });
     });
-    this._roomUsersListener();
-    this._roomMessageListener();
   }
   _roomUsersListener() {
     this.socket.on('room:activeUsers', (res) => {
@@ -56,9 +54,6 @@ class WebSocket {
     this.socket.on('room:newMessage', (res) => {
       chatStore.dispatch({ type: 'room/newMessage', payload: res });
     });
-  }
-  _leaveCurrentRoom(data) {
-    this.socket.emit('user:leaveRoom', data);
   }
 }
 

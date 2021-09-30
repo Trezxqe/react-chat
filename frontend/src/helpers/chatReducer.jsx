@@ -37,14 +37,6 @@ const chatReducer = (state = initState, action) => {
           action.payload.messageData,
         ],
       };
-    case 'chat/joinRoom':
-      return {
-        ...state,
-        currentRoomName: action.payload.name,
-        usersList: action.payload.usersList,
-        currentRoomSize: action.payload.usersList.length,
-        currentRoomChatHistory: action.payload.history,
-      };
     default:
       return state;
   }
