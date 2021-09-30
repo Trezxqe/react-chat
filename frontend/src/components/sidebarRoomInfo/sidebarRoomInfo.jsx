@@ -15,7 +15,7 @@ const SidebarRoomInfo = () => {
         {usersList.map((user) => (
           <SidebarActiveUser
             user={user}
-            key={user.id}
+            key={user.socketId}
             type={checkUserType(user.username, username)}
           />
         ))}

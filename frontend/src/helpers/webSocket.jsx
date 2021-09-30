@@ -11,47 +11,53 @@ class WebSocket {
   connect(username) {
     this.socket = io(this.host, { path: this.path });
     this.socket.on('connect', () => {
-      const { id } = this.socket;
-      this.socket.on('global:getUsers', (usersList) => {
-        chatStore.dispatch({ type: 'chat/getUsers', payload: { usersList } });
-      });
-      this.socket.on('global:message', (message) => {
-        chatStore.dispatch({ type: 'chat/setMessage', payload: { message } });
-      });
-      this.socket.once('global:chatData', (chatData) => {
+      this.socket.emit('user:createProfile', { username });
+      this.socket.on('user:createProfile', (res) => {
         chatStore.dispatch({
-          type: 'chat/setData',
-          payload: { chatHistory: chatData.history, roomName: chatData.name },
+          type: 'user/connect',
+          payload: { username, userId: this.socket.id },
         });
       });
-      this.socket.emit('global:newUser', username);
-      chatStore.dispatch({ type: 'user/login', payload: { username, id } });
+      this.socket.once('user:joinRoom', (res) => {
+        const { roomData } = res;
+        chatStore.dispatch({ type: 'user/joinRoom', payload: roomData });
+        this._roomUsersListener();
+        this._roomMessageListener();
+      });
     });
   }
-  disconnect() {}
+  sendMessage(data) {
+    this.socket.emit('user:newMessage', data);
+  }
   createRoom(data) {
     this.socket.emit('user:createRoom', data);
     this.socket.once('user:createRoom', (res) => {
       if (!res.error) {
-        this.joinRoom(res.roomName);
+        this.joinRoom({ roomName: res.roomName });
       }
     });
   }
-  joinRoom(roomName) {
-    this.socket.emit('user:joinRoom', { roomName });
+  joinRoom(data) {
+    this.socket.emit('user:joinRoom', { roomName: data.roomName });
+    this._leaveCurrentRoom({ currentRoom: data.currentRoom });
     this.socket.once('user:joinRoom', (res) => {
       chatStore.dispatch({ type: 'chat/joinRoom', payload: res.data });
-      this._roomUsersListener();
     });
+    this._roomUsersListener();
+    this._roomMessageListener();
   }
   _roomUsersListener() {
     this.socket.on('room:activeUsers', (res) => {
-      console.log('users list listener:', res);
+      chatStore.dispatch({ type: 'room/activeUsers', payload: res });
     });
   }
-  leaveRoom() {}
-  sendMessage(message) {
-    this.socket.emit('global:message', message);
+  _roomMessageListener() {
+    this.socket.on('room:newMessage', (res) => {
+      console.log('new message:', res);
+    });
+  }
+  _leaveCurrentRoom(data) {
+    this.socket.emit('user:leaveRoom', data);
   }
 }
 

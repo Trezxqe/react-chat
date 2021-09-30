@@ -1,28 +1,30 @@
 class Room {
-  constructor(name, isPrivate) {
-    this.name = name;
-    this.isPrivate = isPrivate;
-    this._chatHistory = [];
+  constructor(roomProfile) {
+    this.roomName = roomProfile.roomName;
+    this.isPrivate = roomProfile.isPrivate;
+    this._roomHistory = [];
     this._usersList = [];
   }
   connect(user) {
     this._usersList.push(user);
   }
-  disconnect(user) {
-    this._usersList = this._usersList.filter((roomer) => roomer.id !== user.id);
+  disconnect(socketId) {
+    this._usersList = this._usersList.filter(
+      (roomer) => roomer.socketId !== socketId,
+    );
   }
-  get usersList() {
+  getUsersList() {
     return this._usersList;
   }
   addMessage(username, message, socketId, date) {
-    const messageId = this._chatHistory.length;
-    this._chatHistory.push({ messageId, username, message, date, socketId });
+    const messageId = this._roomHistory.length;
+    this._roomHistory.push({ messageId, username, message, date, socketId });
     return messageId;
   }
-  get chatData() {
+  getRoomData() {
     return {
-      history: this._chatHistory,
-      name: this.name,
+      roomHistory: this._roomHistory,
+      roomName: this.roomName,
       usersList: this._usersList,
     };
   }

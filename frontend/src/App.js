@@ -4,16 +4,16 @@ import LoginForm from './components/loginForm/loginForm.jsx';
 import ChatLayout from './components/chatLayout/chatLayout.jsx';
 import { useSelector } from 'react-redux';
 const App = () => {
-  const { id } = useSelector((state) => state);
+  const { userId } = useSelector((state) => state);
   return (
     <MainLayout>
       <BrowserRouter>
         <Switch>
           <Route path='/' exact>
-            {id ? <Redirect to='/chat' /> : <LoginForm />}
+            {userId ? <Redirect to='/chat' /> : <LoginForm />}
           </Route>
           <Route path='/chat' exact>
-            {id ? <ChatLayout /> : <Redirect to='/' />}
+            {userId ? <ChatLayout /> : <Redirect to='/' />}
           </Route>
         </Switch>
       </BrowserRouter>
