@@ -16,7 +16,11 @@ const newMessage = (socket, req) => {
   } else if (roomType === 'dialog') {
     messageData.messageId = db.dialogs[req.room].addMessage(messageData);
     const ids = db.dialogs[req.room].getSocketIds();
-    socket.to(ids).emit('dialog:newMessage', { messageData });
+    const roomChecker = {
+      type: req.roomType,
+      room: req.room,
+    };
+    socket.to(ids).emit('dialog:newMessage', { messageData, roomChecker });
     socket.emit('room:newMessage', { messageData });
   }
 };

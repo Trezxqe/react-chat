@@ -22,10 +22,10 @@ class WebSocket {
       this.socket.once('user:joinRoom', (res) => {
         const { roomData } = res;
         chatStore.dispatch({ type: type.USER_JOIN_ROOM, payload: roomData });
+        this._roomUsersListener();
+        this._roomMessageListener();
+        this._dialogMessageListener(roomData);
       });
-      this._roomUsersListener();
-      this._roomMessageListener();
-      this._dialogMessageListener();
     });
   }
   sendMessage(data) {
@@ -72,9 +72,17 @@ class WebSocket {
       chatStore.dispatch({ type: type.ROOM_NEW_MESSAGE, payload: res });
     });
   }
-  _dialogMessageListener() {
+  _dialogMessageListener(roomData) {
     this.socket.on('dialog:newMessage', (res) => {
-      console.log('new private message', res);
+      const { messageData, roomChecker } = res;
+      if (
+        roomData.roomName === roomChecker.room &&
+        roomData.roomType === roomChecker.roomType
+      ) {
+        chatStore.dispatch({ type: type.ROOM_NEW_MESSAGE, payload: messageData });
+      } else {
+        console.log('new private message', messageData);
+      }
     });
   }
 }

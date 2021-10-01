@@ -20,7 +20,6 @@ const initWebSockets = (io) => {
       updateUsersList(socket);
     });
     socket.on('user:newMessage', (req) => {
-      console.log('new message,', req);
       newMessage(socket, req);
     });
     socket.on('disconnecting', () => {
