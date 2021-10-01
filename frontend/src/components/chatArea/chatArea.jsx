@@ -7,10 +7,9 @@ import checkUserType from '../../helpers/other/checkUserType.jsx';
 
 const ChatArea = () => {
   const scrollRef = useRef(null);
-  const { currentRoomHistory, currentRoomName, userId } = useSelector(
+  const { currentRoomHistory, currentRoomName, userId, roomType } = useSelector(
     (state) => state,
   );
-  console.log(currentRoomHistory);
   useEffect(() => {
     scrollRef.current.scrollIntoView();
   }, [currentRoomHistory]);
@@ -18,6 +17,7 @@ const ChatArea = () => {
   return (
     <div className={s.chatArea}>
       <h3 className={s.title}>Channel Name: {currentRoomName}</h3>
+      <h4>Type: {roomType}</h4>
       <div className={s.messageArea}>
         {currentRoomHistory.map((data) => (
           <ChatMessage

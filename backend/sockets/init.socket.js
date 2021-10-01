@@ -10,17 +10,18 @@ const initWebSockets = (io) => {
   const roomProfile = {
     roomName: 'global',
     isPrivate: false,
+    roomType: 'room',
   };
   db.createRoom(roomProfile);
   io.on('connect', (socket) => {
     socket.on('user:createProfile', (req) => {
       const user = createProfile(req, socket);
-      joinRoom(socket, user, 'global');
+      joinRoom(socket, user, 'global', null, 'room');
       updateUsersList(socket);
     });
     socket.on('user:newMessage', (req) => {
-      const { username, room, message } = req;
-      newMessage(socket, username, room, message);
+      console.log('new message,', req);
+      newMessage(socket, req);
     });
     socket.on('disconnecting', () => {
       userDisconnect(socket);
@@ -32,20 +33,21 @@ const initWebSockets = (io) => {
       const user = leaveRoom(socket, currentRoomName);
       userDisconnect(socket);
       updateUsersList(socket);
-      joinRoom(socket, user, roomName, currentRoomName);
+      joinRoom(socket, user, roomName, currentRoomName, roomProfile.roomType);
     });
     socket.on('user:joinRoom', (req) => {
-      const { currentRoomName, roomName } = req;
+      const { currentRoomName, roomName, roomProfile } = req;
       const user = leaveRoom(socket, currentRoomName);
       userDisconnect(socket);
       updateUsersList(socket);
-      joinRoom(socket, user, roomName, currentRoomName);
+      joinRoom(socket, user, roomName, currentRoomName, roomProfile.roomType);
+      updateUsersList(socket);
     });
     socket.on('user:startDialog', (req) => {
-      const dialogProfile = req;
+      const { dialogProfile } = req;
       dialogProfile.client.socketId = socket.id;
-      const dialogCode = db.createDialog(dialogProfile);
-      socket.emit('user:startDialog', { dialogCode });
+      const dialogData = db.createDialog(dialogProfile);
+      socket.emit('user:startDialog', { dialogData });
     });
   });
 };

@@ -4,9 +4,11 @@ const initState = {
   username: null,
   userId: null,
   usersList: [],
+  roomType: null,
   currentRoomName: null,
   currentRoomSize: null,
   currentRoomHistory: [],
+  privateDialogs: [],
 };
 
 const chatReducer = (state = initState, action) => {
@@ -24,6 +26,7 @@ const chatReducer = (state = initState, action) => {
         currentRoomHistory: action.payload.roomHistory,
         currentRoomSize: action.payload.usersList.length,
         usersList: action.payload.usersList,
+        roomType: action.payload.roomType,
       };
     case type.ROOM_ACTIVE_USERS:
       return {

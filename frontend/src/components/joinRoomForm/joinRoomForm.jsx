@@ -9,6 +9,9 @@ const JoinRoomForm = () => {
     const data = {
       currentRoomName,
       roomName: e.target.roomName.value,
+      roomProfile: {
+        roomType: 'room',
+      },
     };
     webSocket.joinRoom(data);
     e.target.reset();

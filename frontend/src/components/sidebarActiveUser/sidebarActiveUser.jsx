@@ -2,15 +2,19 @@ import s from './sidebarActiveUser.module.css';
 import dialog from './dialog.svg';
 import webSocket from '../../helpers/webSocket.jsx';
 
-const SidebarActiveUser = ({ user, type, client }) => {
+const SidebarActiveUser = ({ user, type, client, currentRoomName }) => {
   const clickHandler = () => {
     const data = {
-      client: {
-        username: client,
-      },
-      recipient: {
-        username: user.username,
-        socketId: user.socketId,
+      dialogProfile: {
+        client: {
+          username: client,
+        },
+        recipient: {
+          username: user.username,
+          socketId: user.socketId,
+        },
+        currentRoomName,
+        roomType: 'dialog',
       },
     };
     webSocket.startDialog(data);

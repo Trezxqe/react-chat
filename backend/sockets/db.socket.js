@@ -17,10 +17,10 @@ const db = {
     const existDialog = this._searchDialog(client.username, recipient.username);
     const roomName = `${client.username}---${recipient.username}`;
     if (existDialog) {
-      return this.dialogs[existDialog].roomName;
+      return this.dialogs[existDialog].getDialogDataSimple();
     } else {
       this.dialogs[roomName] = new Dialog(dialogProfile, roomName);
-      return this.dialogs[roomName].roomName;
+      return this.dialogs[roomName].getDialogDataSimple();
     }
   },
   _searchDublicates(str) {

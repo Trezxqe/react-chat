@@ -4,6 +4,7 @@ class Room {
     this.isPrivate = roomProfile.isPrivate;
     this._roomHistory = [];
     this._usersList = [];
+    this.roomType = roomProfile.roomType;
   }
   connect(user) {
     this._usersList.push(user);
@@ -30,6 +31,7 @@ class Room {
       roomHistory: this._roomHistory,
       roomName: this.roomName,
       usersList: this._usersList,
+      roomType: this.roomType,
     };
   }
 }

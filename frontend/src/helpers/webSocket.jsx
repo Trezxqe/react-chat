@@ -25,6 +25,7 @@ class WebSocket {
       });
       this._roomUsersListener();
       this._roomMessageListener();
+      this._dialogMessageListener();
     });
   }
   sendMessage(data) {
@@ -49,7 +50,16 @@ class WebSocket {
   startDialog(data) {
     this.socket.emit('user:startDialog', data);
     this.socket.once('user:startDialog', (res) => {
-      console.log('dialog started:', res);
+      const { dialogProfile } = data;
+      const { dialogData } = res;
+      const roomData = {
+        currentRoomName: dialogProfile.currentRoomName,
+        roomName: dialogData.roomName,
+        roomProfile: {
+          roomType: dialogProfile.roomType,
+        },
+      };
+      this.joinRoom(roomData);
     });
   }
   _roomUsersListener() {
@@ -60,6 +70,11 @@ class WebSocket {
   _roomMessageListener() {
     this.socket.on('room:newMessage', (res) => {
       chatStore.dispatch({ type: type.ROOM_NEW_MESSAGE, payload: res });
+    });
+  }
+  _dialogMessageListener() {
+    this.socket.on('dialog:newMessage', (res) => {
+      console.log('new private message', res);
     });
   }
 }

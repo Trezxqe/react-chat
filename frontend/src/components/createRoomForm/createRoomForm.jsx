@@ -11,6 +11,7 @@ const CreateRoomForm = () => {
       roomProfile: {
         roomName: e.target.roomName.value,
         isPrivate: e.target.roomType.checked,
+        roomType: 'room',
       },
     };
     webSocket.createRoom(data);
