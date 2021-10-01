@@ -41,6 +41,12 @@ const initWebSockets = (io) => {
       updateUsersList(socket);
       joinRoom(socket, user, roomName, currentRoomName);
     });
+    socket.on('user:startDialog', (req) => {
+      const dialogProfile = req;
+      dialogProfile.client.socketId = socket.id;
+      const dialogCode = db.createDialog(dialogProfile);
+      socket.emit('user:startDialog', { dialogCode });
+    });
   });
 };
 

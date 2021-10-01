@@ -4,7 +4,9 @@ import SidebarActiveUser from '../sidebarActiveUser/sidebarActiveUser.jsx';
 import s from './sidebarRoomInfo.module.css';
 
 const SidebarRoomInfo = () => {
-  const { userId, usersList, currentRoomSize } = useSelector((state) => state);
+  const { username, userId, usersList, currentRoomSize } = useSelector(
+    (state) => state,
+  );
   return (
     <div className={s.wrapper}>
       <h3 className={s.title}>Active Users</h3>
@@ -14,6 +16,7 @@ const SidebarRoomInfo = () => {
       <div className={s.listing}>
         {usersList.map((user) => (
           <SidebarActiveUser
+            client={username}
             user={user}
             key={user.socketId}
             type={checkUserType(user.socketId, userId)}

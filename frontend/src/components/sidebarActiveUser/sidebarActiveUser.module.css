@@ -5,6 +5,7 @@
   padding: 5px;
   border-radius: 5px;
   margin-bottom: 5px;
+  position: relative;
 }
 .username {
   font-weight: 500;
@@ -25,5 +26,13 @@
   padding-right: 5px;
   color: #eceaea;
 }
-.other {
+.dialog {
+  cursor: pointer;
+  width: 20px;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  background-color: white;
+  padding: 2px;
+  border-radius: 5px;
 }

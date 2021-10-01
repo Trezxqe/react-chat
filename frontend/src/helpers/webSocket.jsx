@@ -46,6 +46,12 @@ class WebSocket {
       chatStore.dispatch({ type: type.USER_JOIN_ROOM, payload: roomData });
     });
   }
+  startDialog(data) {
+    this.socket.emit('user:startDialog', data);
+    this.socket.once('user:startDialog', (res) => {
+      console.log('dialog started:', res);
+    });
+  }
   _roomUsersListener() {
     this.socket.on('room:activeUsers', (res) => {
       chatStore.dispatch({ type: type.ROOM_ACTIVE_USERS, payload: res });
