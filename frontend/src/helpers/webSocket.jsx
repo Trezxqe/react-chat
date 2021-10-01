@@ -1,5 +1,6 @@
 import { io } from 'socket.io-client';
 import chatStore from './chatStore.jsx';
+import * as type from './actionTypes.jsx';
 
 class WebSocket {
   constructor() {
@@ -14,13 +15,13 @@ class WebSocket {
       this.socket.emit('user:createProfile', { username });
       this.socket.on('user:createProfile', (res) => {
         chatStore.dispatch({
-          type: 'user/connect',
+          type: type.USER_CONNECT,
           payload: { username, userId: this.socket.id },
         });
       });
       this.socket.once('user:joinRoom', (res) => {
         const { roomData } = res;
-        chatStore.dispatch({ type: 'user/joinRoom', payload: roomData });
+        chatStore.dispatch({ type: type.USER_JOIN_ROOM, payload: roomData });
       });
       this._roomUsersListener();
       this._roomMessageListener();
@@ -34,7 +35,7 @@ class WebSocket {
     this.socket.once('user:joinRoom', (res) => {
       const { roomData } = res;
       if (!res.error) {
-        chatStore.dispatch({ type: 'user/joinRoom', payload: roomData });
+        chatStore.dispatch({ type: type.USER_JOIN_ROOM, payload: roomData });
       }
     });
   }
@@ -42,17 +43,17 @@ class WebSocket {
     this.socket.emit('user:joinRoom', data);
     this.socket.once('user:joinRoom', (res) => {
       const { roomData } = res;
-      chatStore.dispatch({ type: 'user/joinRoom', payload: roomData });
+      chatStore.dispatch({ type: type.USER_JOIN_ROOM, payload: roomData });
     });
   }
   _roomUsersListener() {
     this.socket.on('room:activeUsers', (res) => {
-      chatStore.dispatch({ type: 'room/activeUsers', payload: res });
+      chatStore.dispatch({ type: type.ROOM_ACTIVE_USERS, payload: res });
     });
   }
   _roomMessageListener() {
     this.socket.on('room:newMessage', (res) => {
-      chatStore.dispatch({ type: 'room/newMessage', payload: res });
+      chatStore.dispatch({ type: type.ROOM_NEW_MESSAGE, payload: res });
     });
   }
 }

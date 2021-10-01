@@ -1,0 +1,4 @@
+export const USER_CONNECT = 'USER_CONNECT';
+export const USER_JOIN_ROOM = 'USER_JOIN_ROOM';
+export const ROOM_ACTIVE_USERS = 'ROOM_ACTIVE_USERS';
+export const ROOM_NEW_MESSAGE = 'ROOM_NEW_MESSAGE';
