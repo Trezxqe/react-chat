@@ -4,7 +4,8 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "wp-w-client": "./node_modules/.bin/webpack --mode=development"
+    "start": "cd ./frontend && npm install && cd ../backend && npm install && npm start",
+    "webpack-client-build": "./node_modules/.bin/webpack --mode=production"
   },
   "repository": {
     "type": "git",

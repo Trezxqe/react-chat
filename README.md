@@ -2,7 +2,6 @@
 
 **Stack:** Node, React, Redux, Socket.io
 
-## Dev Only
+## Start
 
-**Install Packages:** npm run install-dev
-**Start:** npm run dev
+npm start

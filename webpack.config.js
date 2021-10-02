@@ -5,7 +5,7 @@ const BUILD_DIR = path.join(__dirname, 'backend/public/build');
 const APP_DIR = path.join(__dirname, 'frontend');
 
 export default {
-  mode: 'development',
+  mode: 'production',
   entry: {
     main: APP_DIR + '/src/index.js',
   },
