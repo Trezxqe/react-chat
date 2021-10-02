@@ -30,6 +30,11 @@ export default {
         exclude: APP_DIR + '/node_modules',
         use: ['style-loader', 'css-loader'],
       },
+      {
+        test: /\.svg$/,
+        exclude: APP_DIR + '/node_modules',
+        loader: 'svg-inline-loader',
+      },
     ],
   },
 };
