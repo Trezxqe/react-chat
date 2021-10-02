@@ -70,6 +70,12 @@ class WebSocket {
   _roomMessageListener() {
     this.socket.on('room:newMessage', (res) => {
       chatStore.dispatch({ type: type.ROOM_NEW_MESSAGE, payload: res });
+      if (res.messageData.dialogName) {
+        chatStore.dispatch({
+          type: type.DIALOG_NEW_MESSAGE,
+          payload: res.messageData,
+        });
+      }
     });
   }
   _dialogMessageListener(roomData) {
@@ -81,7 +87,7 @@ class WebSocket {
       ) {
         chatStore.dispatch({ type: type.ROOM_NEW_MESSAGE, payload: messageData });
       } else {
-        console.log('new private message', messageData);
+        chatStore.dispatch({ type: type.DIALOG_NEW_MESSAGE, payload: messageData });
       }
     });
   }

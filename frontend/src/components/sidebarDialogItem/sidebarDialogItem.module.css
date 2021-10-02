@@ -1,0 +1,27 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  background-color: #ececec;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  position: relative;
+}
+.name {
+  margin: 0;
+  font-weight: 500;
+  padding-bottom: 2px;
+}
+.info {
+  font-size: 12px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.info span {
+  margin: 0 1px;
+}
+.time {
+  font-size: 10px;
+}

@@ -1,4 +1,5 @@
 import * as type from './actionTypes.jsx';
+import filterActiveDialogs from './other/filterActiveDialogs.jsx';
 
 const initState = {
   username: null,
@@ -8,7 +9,7 @@ const initState = {
   currentRoomName: null,
   currentRoomSize: null,
   currentRoomHistory: [],
-  privateDialogs: [],
+  activeDialogs: [],
 };
 
 const chatReducer = (state = initState, action) => {
@@ -41,6 +42,11 @@ const chatReducer = (state = initState, action) => {
           ...state.currentRoomHistory,
           action.payload.messageData,
         ],
+      };
+    case type.DIALOG_NEW_MESSAGE:
+      return {
+        ...state,
+        activeDialogs: filterActiveDialogs([...state.activeDialogs], action.payload),
       };
     default:
       return state;

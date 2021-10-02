@@ -8,6 +8,7 @@ const newMessage = (socket, req) => {
     socketId: socket.id,
     date: new Date(),
     messageId: null,
+    dialogName: null,
   };
   if (roomType === 'room') {
     messageData.messageId = db.rooms[req.room].addMessage(messageData);
@@ -15,6 +16,7 @@ const newMessage = (socket, req) => {
     socket.to(req.room).emit('room:newMessage', { messageData });
   } else if (roomType === 'dialog') {
     messageData.messageId = db.dialogs[req.room].addMessage(messageData);
+    messageData.dialogName = req.room;
     const ids = db.dialogs[req.room].getSocketIds();
     const roomChecker = {
       type: req.roomType,
