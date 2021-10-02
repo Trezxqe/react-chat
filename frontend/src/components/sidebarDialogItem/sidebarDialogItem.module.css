@@ -6,6 +6,7 @@
   border-radius: 5px;
   margin-bottom: 5px;
   position: relative;
+  cursor: pointer;
 }
 .name {
   margin: 0;

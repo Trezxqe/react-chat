@@ -35,9 +35,8 @@ class WebSocket {
     this.socket.emit('user:createRoom', data);
     this.socket.once('user:joinRoom', (res) => {
       const { roomData } = res;
-      if (!res.error) {
-        chatStore.dispatch({ type: type.USER_JOIN_ROOM, payload: roomData });
-      }
+      chatStore.dispatch({ type: type.USER_JOIN_ROOM, payload: roomData });
+      this._dialogMessageListener(roomData);
     });
   }
   joinRoom(data) {
@@ -45,6 +44,8 @@ class WebSocket {
     this.socket.once('user:joinRoom', (res) => {
       const { roomData } = res;
       chatStore.dispatch({ type: type.USER_JOIN_ROOM, payload: roomData });
+      this._roomMessageListener(data);
+      this._dialogMessageListener(roomData);
     });
   }
   startDialog(data) {
@@ -63,11 +64,14 @@ class WebSocket {
     });
   }
   _roomUsersListener() {
+    this.socket.removeAllListeners('room:activeUsers');
     this.socket.on('room:activeUsers', (res) => {
       chatStore.dispatch({ type: type.ROOM_ACTIVE_USERS, payload: res });
     });
   }
-  _roomMessageListener() {
+  _roomMessageListener(data) {
+    console.log(data);
+    this.socket.removeAllListeners('room:newMessage');
     this.socket.on('room:newMessage', (res) => {
       chatStore.dispatch({ type: type.ROOM_NEW_MESSAGE, payload: res });
       if (res.messageData.dialogName) {
@@ -79,13 +83,15 @@ class WebSocket {
     });
   }
   _dialogMessageListener(roomData) {
+    this.socket.removeAllListeners('dialog:newMessage');
     this.socket.on('dialog:newMessage', (res) => {
       const { messageData, roomChecker } = res;
+      console.log(roomChecker);
       if (
         roomData.roomName === roomChecker.room &&
-        roomData.roomType === roomChecker.roomType
+        roomData.roomType === roomChecker.type
       ) {
-        chatStore.dispatch({ type: type.ROOM_NEW_MESSAGE, payload: messageData });
+        chatStore.dispatch({ type: type.ROOM_NEW_MESSAGE, payload: res });
       } else {
         chatStore.dispatch({ type: type.DIALOG_NEW_MESSAGE, payload: messageData });
       }
