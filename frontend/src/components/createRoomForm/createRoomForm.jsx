@@ -10,7 +10,7 @@ const CreateRoomForm = () => {
       currentRoomName,
       roomProfile: {
         roomName: e.target.roomName.value,
-        isPrivate: e.target.roomType.checked,
+        isPrivate: false,
         roomType: 'room',
       },
     };
@@ -25,10 +25,10 @@ const CreateRoomForm = () => {
           <span>Room name:</span>
           <input className={s.input} type='text' name='roomName' required />
         </label>
-        <label>
+        {/* <label>
           <span>Private:</span>
           <input type='checkbox' name='roomType' />
-        </label>
+        </label> */}
         <button className={s.button} type='submit'>
           Create
         </button>

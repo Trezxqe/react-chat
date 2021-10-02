@@ -2,7 +2,7 @@ import s from './sidebarActiveUser.module.css';
 import dialog from './dialog.svg';
 import webSocket from '../../helpers/webSocket.jsx';
 
-const SidebarActiveUser = ({ user, type, client, currentRoomName }) => {
+const SidebarActiveUser = ({ user, type, client, currentRoomName, roomType }) => {
   const clickHandler = () => {
     const data = {
       dialogProfile: {
@@ -23,7 +23,7 @@ const SidebarActiveUser = ({ user, type, client, currentRoomName }) => {
     <div className={`${s.wrapper} ${type ? s.client : s.other}`}>
       <span className={s.username}>{user.username}</span>
       <span className={s.id}>{'[' + user.socketId + ']'}</span>
-      {!type ? (
+      {!type && roomType !== 'dialog' ? (
         <img
           className={s.dialog}
           src={dialog}

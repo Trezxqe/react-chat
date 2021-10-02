@@ -4,7 +4,7 @@ import SidebarActiveUser from '../sidebarActiveUser/sidebarActiveUser.jsx';
 import s from './sidebarRoomInfo.module.css';
 
 const SidebarRoomInfo = () => {
-  const { username, userId, usersList, currentRoomSize, currentRoomName } =
+  const { username, userId, usersList, currentRoomSize, currentRoomName, roomType } =
     useSelector((state) => state);
   return (
     <div className={s.wrapper}>
@@ -20,6 +20,7 @@ const SidebarRoomInfo = () => {
             user={user}
             key={user.socketId}
             type={checkUserType(user.socketId, userId)}
+            roomType={roomType}
           />
         ))}
       </div>

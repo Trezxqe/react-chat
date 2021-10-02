@@ -4,14 +4,16 @@ const SidebarDialogItem = ({ dialog, currentRoomName }) => {
   const time = dialog.date.replace(/.+([0-9:]{8}).+/, '$1');
 
   const clickHandler = () => {
-    const roomData = {
-      currentRoomName: currentRoomName,
-      roomName: dialog.dialogName,
-      roomProfile: {
-        roomType: 'dialog',
-      },
-    };
-    webSocket.joinRoom(roomData);
+    if (currentRoomName !== dialog.dialogName) {
+      const roomData = {
+        currentRoomName: currentRoomName,
+        roomName: dialog.dialogName,
+        roomProfile: {
+          roomType: 'dialog',
+        },
+      };
+      webSocket.joinRoom(roomData);
+    }
   };
   return (
     <div className={s.wrapper} onClick={clickHandler}>

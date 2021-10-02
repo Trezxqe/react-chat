@@ -44,7 +44,7 @@ class WebSocket {
     this.socket.once('user:joinRoom', (res) => {
       const { roomData } = res;
       chatStore.dispatch({ type: type.USER_JOIN_ROOM, payload: roomData });
-      this._roomMessageListener(data);
+      this._roomMessageListener();
       this._dialogMessageListener(roomData);
     });
   }
@@ -69,8 +69,7 @@ class WebSocket {
       chatStore.dispatch({ type: type.ROOM_ACTIVE_USERS, payload: res });
     });
   }
-  _roomMessageListener(data) {
-    console.log(data);
+  _roomMessageListener() {
     this.socket.removeAllListeners('room:newMessage');
     this.socket.on('room:newMessage', (res) => {
       chatStore.dispatch({ type: type.ROOM_NEW_MESSAGE, payload: res });
@@ -86,7 +85,6 @@ class WebSocket {
     this.socket.removeAllListeners('dialog:newMessage');
     this.socket.on('dialog:newMessage', (res) => {
       const { messageData, roomChecker } = res;
-      console.log(roomChecker);
       if (
         roomData.roomName === roomChecker.room &&
         roomData.roomType === roomChecker.type
